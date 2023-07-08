@@ -1,0 +1,29 @@
+###
+POST localhost:8080/api/auth/signup
+Content-Type: application/json
+
+{
+  "username": "No211",
+  "email": "No211@gmail.com",
+  "password": "123456"
+}
+
+###
+POST localhost:8080/api/auth/signup
+Content-Type: application/json
+
+{
+  "username": "No212",
+  "email": "No212@gmail.com",
+  "password": "123456"
+}
+
+###
+POST localhost:8080/api/auth/signin
+Content-Type: application/json
+
+{
+  "username": "No211",
+  "email": "No211@gmail.com",
+  "password": "123456"
+}

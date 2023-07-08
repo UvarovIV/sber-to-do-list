@@ -1,0 +1,42 @@
+###
+POST localhost:8080/categories
+Content-Type: application/json
+
+{
+  "name": "Работа",
+  "user": {"id": 1}
+}
+
+###
+POST localhost:8080/categories
+Content-Type: application/json
+
+{
+  "name": "Дом",
+  "user": {"id": 1}
+}
+
+###
+POST localhost:8080/categories
+Content-Type: application/json
+
+{
+  "name": "Что это?",
+  "user": {"id": 2}
+}
+
+###
+GET localhost:8080/categories/1
+
+###
+PUT localhost:8080/categories
+Content-Type: application/json
+
+{
+  "id": 2,
+  "name": "Работа не волк",
+  "user": {"id": 1}
+}
+
+###
+DELETE localhost:8080/categories?idCategory=4
