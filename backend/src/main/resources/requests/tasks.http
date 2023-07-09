@@ -1,0 +1,112 @@
+###
+GET localhost:8080/tasks?userId=1
+
+###
+POST http://localhost:8080/tasks
+Content-Type: application/json
+
+{
+  "title": "Task1",
+  "description": "Information about Task1",
+  "dateAndTimeOfTask": "2023-07-08 21:06:10",
+  "status": {
+    "id": 1
+  },
+  "category": {
+    "id": 2
+  },
+  "regularity": {
+    "id": 1
+  },
+  "priority": {
+    "id": 1
+  }
+}
+
+###
+POST http://localhost:8080/tasks
+Content-Type: application/json
+
+{
+  "title": "Task2",
+  "description": "Information about Task2",
+  "dateAndTimeOfTask": "2023-07-08 21:19:10",
+  "status": {
+    "id": 1
+  },
+  "category": {
+    "id": 2
+  },
+  "regularity": {
+    "id": 1
+  },
+  "priority": {
+    "id": 1
+  }
+}
+
+###
+POST http://localhost:8080/tasks
+Content-Type: application/json
+
+{
+  "title": "Task5",
+  "description": "Information about Task5",
+  "dateAndTimeOfTask": "2023-07-08 21:59:10",
+  "status": {
+    "id": 1
+  },
+  "category": {
+    "id": 3
+  },
+  "regularity": {
+    "id": 1
+  },
+  "priority": {
+    "id": 1
+  }
+}
+
+###
+PUT http://localhost:8080/tasks
+Content-Type: application/json
+
+{
+  "id": 1,
+  "title": "Task4",
+  "description": "Information about Task4",
+  "dateAndTimeOfTask": "2023-07-08 21:40:10",
+  "status": {
+    "id": 1
+  },
+  "category": {
+    "id": 2
+  },
+  "regularity": {
+    "id": 1
+  },
+  "priority": {
+    "id": 1
+  }
+}
+
+###
+GET localhost:8080/tasks/categories?categoryId=2
+
+###
+GET localhost:8080/tasks/notifications?userId=1
+
+###
+GET localhost:8080/tasks/notifications?userId=2
+
+###
+GET http://localhost:8080/tasks/statuses
+
+###
+GET http://localhost:8080/tasks/regularities
+
+###
+GET http://localhost:8080/tasks/priorities
+
+###
+DELETE localhost:8080/tasks/4
