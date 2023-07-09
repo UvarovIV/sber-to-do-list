@@ -40,12 +40,11 @@ public class CategoryController {
     /**
      * Метод для получения списка категорий по идентификатору пользователя.
      *
-     * @param userId Уникальный идентификатор пользователя
      * @return Возвращает список категорий
      */
-    @GetMapping("/{userId}")
-    public ResponseEntity<List<Category>> getCategories(@PathVariable long userId) {
-        return ResponseEntity.ok().body(categoryService.findAllByUserId(userId));
+    @GetMapping()
+    public ResponseEntity<List<Category>> getCategories() {
+        return ResponseEntity.ok().body(categoryService.findAll());
     }
 
     /**

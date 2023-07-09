@@ -18,4 +18,5 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
      * @return Возвращает список всех категорий определенного пользователя
      */
     List<Category> findAllByUser_Id(long userId);
+    Boolean existsByIdAndUser_Id(long cartId, long userId);
 }
