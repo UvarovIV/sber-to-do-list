@@ -3,6 +3,7 @@ package ru.sber.security.jwt;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
@@ -46,6 +47,7 @@ public class JwtUtils {
     }
 
     public void validateJwtToken(String authToken) {
+
         if (authToken == null) {
             throw new BadCredentialsException("Не передан JWT-токен");
         }

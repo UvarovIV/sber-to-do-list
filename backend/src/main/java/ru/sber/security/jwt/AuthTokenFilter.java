@@ -35,7 +35,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
-        if (request.getRequestURI().equals("/api/auth/signin") || request.getRequestURI().equals("/api/auth/signup")) {
+        if (request.getRequestURI().equals("/api/auth/signin") || request.getRequestURI().equals("/api/auth/signup")) { //Оставить только регистрацию и авторизацию
             filterChain.doFilter(request, response);
             return;
         }

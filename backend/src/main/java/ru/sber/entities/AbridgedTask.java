@@ -1,5 +1,6 @@
 package ru.sber.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -12,6 +13,7 @@ public class AbridgedTask {
     private final Long id;
     String title;
     String description;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     LocalDateTime dateAndTimeOfTask;
     Status status;
     Priority priority;

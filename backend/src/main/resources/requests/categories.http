@@ -9,11 +9,11 @@ Content-Type: application/json
 
 ###
 POST localhost:8080/categories
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJObzIxMiIsImlhdCI6MTY4ODkwMjcwNywiZXhwIjoxNjg4OTg5MTA3fQ.hs9lq6w0eYejSlhqYWwrOGmqdUBhdnKH8FsPP1Pbm38
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJObzIxOSIsImlhdCI6MTY4ODkzMTA5NSwiZXhwIjoxNjg5MDE3NDk1fQ.Xbv8Qu74aD9iSNnBFDfzBKnOnq7pzR3ViXF2kF0fQ7c
 Content-Type: application/json
 
 {
-  "name": "Работа2"
+  "name": "Рабо"
 }
 
 ###
@@ -27,8 +27,7 @@ Content-Type: application/json
 
 ###
 GET localhost:8080/categories
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJObzIxMiIsImlhdCI6MTY4ODkwMjcwNywiZXhwIjoxNjg4OTg5MTA3fQ.hs9lq6w0eYejSlhqYWwrOGmqdUBhdnKH8FsPP1Pbm38
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJObzIxOSIsImlhdCI6MTY4ODkzMTA5NSwiZXhwIjoxNjg5MDE3NDk1fQ.Xbv8Qu74aD9iSNnBFDfzBKnOnq7pzR3ViXF2kF0fQ7c
 ###
 PUT localhost:8080/categories
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJObzIxMiIsImlhdCI6MTY4ODkwMjcwNywiZXhwIjoxNjg4OTg5MTA3fQ.hs9lq6w0eYejSlhqYWwrOGmqdUBhdnKH8FsPP1Pbm38

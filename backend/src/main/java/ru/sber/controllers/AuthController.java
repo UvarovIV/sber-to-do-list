@@ -29,7 +29,6 @@ import java.util.stream.Collectors;
 /**
  * Контроллер для аутентификации и регистрации пользователей.
  */
-@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
