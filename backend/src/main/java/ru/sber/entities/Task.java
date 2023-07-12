@@ -31,7 +31,7 @@ public class Task {
     @Column
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Temporal(TemporalType.TIMESTAMP)
-    LocalDateTime dateAndTimeOfTask;
+    LocalDateTime date;
 
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)

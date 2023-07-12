@@ -14,6 +14,7 @@ const SideBar = () => {
     const dispatch = useDispatch();
     const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
     const categories = useSelector((state) => state.categories.categories);
+    const selectedCategory = useSelector((state) => state.categories.selectedCategory);
 
     const showModal = () => {
         setVisible(true);
@@ -29,9 +30,6 @@ const SideBar = () => {
 
     const createCategory = (values) => {
         categoryService.createCategory({name: values.categoryName}, dispatch)
-            .then(() => {
-                categoryService.getCategories(dispatch)
-            })
         setVisible(false);
     };
 
@@ -47,6 +45,9 @@ const SideBar = () => {
                 </Menu.Item>
                 {isLoggedIn ?
                     (<>
+                        <Menu.Item key="tasks" icon={<InboxOutlined/>}>
+                            <Link to="/tasks">Все задачи</Link>
+                        </Menu.Item>
                         <Menu.Item key="archive" icon={<InboxOutlined/>}>
                             <Link to="/archive">Архив</Link>
                         </Menu.Item>
@@ -57,7 +58,7 @@ const SideBar = () => {
                             {categories.map((category) => (
                                 <Menu.Item key={`category/${category.id}`} icon={<FolderOutlined/>}
                                            title={category.name} onClick={() => setCategory({id: category.id, name: category.name})}>
-                                    <Link to={`/category/${category.id}`}>{category.name}</Link>
+                                    <Link to={`/category`}>{category.name}</Link>
                                 </Menu.Item>
                             ))}
                         </SubMenu>

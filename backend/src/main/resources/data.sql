@@ -30,5 +30,3 @@ values ('URGENT');
 insert into uvaroviv_to_do_list.priorities (name)
 values ('CRITICAL');
 
-insert into uvaroviv_to_do_list.user_roles
-values (1, 2);

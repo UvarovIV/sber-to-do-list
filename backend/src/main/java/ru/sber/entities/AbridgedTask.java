@@ -14,7 +14,7 @@ public class AbridgedTask {
     String title;
     String description;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    LocalDateTime dateAndTimeOfTask;
+    LocalDateTime date;
     Status status;
     Priority priority;
     Regularity regularity;
@@ -25,7 +25,7 @@ public class AbridgedTask {
         this.id = task.getId();
         this.title = task.title;
         this.description = task.description;
-        this.dateAndTimeOfTask = task.dateAndTimeOfTask;
+        this.date = task.date;
         this.status = task.status;
         this.priority = task.priority;
         this.regularity = task.regularity;

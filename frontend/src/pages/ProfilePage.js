@@ -23,11 +23,11 @@ const ProfilePage = () => {
                 <Title level={4}>{user.email}</Title>
             </Header>
             <Content style={{ margin: '16px' }}>
-                {/* Здесь вы можете разместить дополнительное содержимое для страницы профиля */}
+
             </Content>
         </Layout>) :
             (<div style={{textAlign: "center", fontSize: 30, marginTop: 30}}>
-                Пожалуйста авторизуйтесь или зарегистрируйтесь
+                Пожалуйста войдите или зарегистрируйтесь
             </div>)}
         </>
     );

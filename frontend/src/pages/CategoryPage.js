@@ -12,8 +12,6 @@ import ModalForAddTask from "../components/ModalForAddTask";
 
 const CategoryPage = () => {
 
-    const {id} = useParams();
-
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [showAddTaskModal, setShowAddTaskModal] = useState(false);
@@ -21,22 +19,13 @@ const CategoryPage = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const categories = useSelector((state) => state.categories.categories);
     const selectedTask = useSelector((state) => state.tasks.selectedTask);
     const selectedCategory = useSelector((state) => state.categories.selectedCategory);
 
     const tasks = useSelector((state) => state.tasks.tasks);
-    const categoriesIds = categories.map((category) => category.id);
 
     useEffect(() => {
-        console.log(selectedCategory.id)
-        //Добавить categoriesIds в LocalStorage
-        if (categoriesIds.includes(selectedCategory.id)) {
-            taskService.getTasksFromCategory(id, dispatch);
-        } else {
-            navigate('/not_found');
-        }
-
+        taskService.getTasksFromCategory(selectedCategory.id, dispatch);
     }, [selectedCategory]);
 
     const openModal = (task) => {
@@ -54,7 +43,7 @@ const CategoryPage = () => {
     }
 
     const handleDeleteCategory = () => {
-        categoryService.deleteCategory(id, dispatch);
+        categoryService.deleteCategory(selectedCategory.id, dispatch);
         setShowDeleteModal(true);
         navigate("/profile")
         categoryService.getCategories(dispatch);
@@ -102,8 +91,6 @@ const CategoryPage = () => {
         </Menu>
     );
 
-    console.log(selectedCategory)
-
     return (
         <Scrollbar>
             <div style={{position: "absolute", top: 20, right: 30}}>
@@ -124,7 +111,7 @@ const CategoryPage = () => {
                     >
                         {task.title}
                         <br/>
-                        {task.dateAndTimeOfTask}
+                        {task.date}
                     </Card>
                 ))}
             </div>

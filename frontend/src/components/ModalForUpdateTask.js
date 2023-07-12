@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import {Button, DatePicker, Form, Input, Modal, Select} from 'antd';
 import {useDispatch, useSelector} from "react-redux";
 import taskService from "../services/taskService";
+import Translator from "./Translator";
 
 const {Option} = Select;
 
@@ -13,17 +14,17 @@ const ModalForUpdateTask = ({selectedTask, closeModal}) => {
         const task_id = selectedTask.id;
         const title = values.taskName;
         const description = values.taskDescription;
-        const date = values.taskDate;
-        const regularity = values.taskRegularity
-        const status = values.taskStatus
-        const priority = values.taskPriority
+        const date = values.taskDate ? values.taskDate?.format("YYYY-MM-DD HH:mm:ss") : selectedTask.date;
+        const regularity = values.taskRegularity ? values.taskRegularity : selectedTask.regularity.id
+        const status = values.taskStatus ? values.taskStatus : selectedTask.status.id
+        const priority = values.taskPriority ? values.taskPriority : selectedTask.priority.id
         taskService.updateTask(selectedCategory.id, {
             id: task_id,
-            date_and_time_of_task: date,
+            date: date,
             description: description,
             title: title,
             category: {
-                id: selectedCategory.id
+                id: selectedTask.categoryId
             },
             regularity: {
                 id: regularity
@@ -43,7 +44,7 @@ const ModalForUpdateTask = ({selectedTask, closeModal}) => {
         taskService.getStatuses(dispatch)
         taskService.getPriorities(dispatch)
         taskService.getRegularities(dispatch)
-    }, [selectedTask]);
+    }, []);
 
     const statuses = useSelector((state) => state.tasks.statuses);
     const regularities = useSelector((state) => state.tasks.regularities);
@@ -83,8 +84,9 @@ const ModalForUpdateTask = ({selectedTask, closeModal}) => {
                         <Form.Item
                             label="Дата"
                             name="taskDate"
+
                         >
-                            <DatePicker showTime onChange={onChange} onOk={onOk}/>
+                            <DatePicker placeholder={selectedTask.date} showTime onChange={onChange} onOk={onOk}/>
                         </Form.Item>
 
                         <Form.Item
@@ -92,9 +94,9 @@ const ModalForUpdateTask = ({selectedTask, closeModal}) => {
                             name="taskRegularity"
                         >
 
-                            <Select>
+                            <Select placeholder={Translator.translateRegularity(selectedTask.regularity.name)}>
                                 {regularities.map((regularity) => (
-                                    <Option key={regularity.id} value={String(regularity.id)}>{regularity.name}</Option>
+                                    <Option key={regularity.id} value={String(regularity.id)}>{Translator.translateRegularity(regularity.name)}</Option>
                                 ))}
                             </Select>
                         </Form.Item>
@@ -103,9 +105,9 @@ const ModalForUpdateTask = ({selectedTask, closeModal}) => {
                             label="Статус"
                             name="taskStatus"
                         >
-                            <Select>
+                            <Select placeholder={Translator.translateStatus(selectedTask.status.name)}>
                                 {statuses.map((status) => (
-                                    <Option key={status.id} value={String(status.id)}>{status.name}</Option>
+                                    <Option key={status.id} value={String(status.id)}>{Translator.translateStatus(status.name)}</Option>
                                 ))}
                             </Select>
                         </Form.Item>
@@ -115,9 +117,9 @@ const ModalForUpdateTask = ({selectedTask, closeModal}) => {
                             name="taskPriority"
 
                         >
-                            <Select>
+                            <Select placeholder={Translator.translatePriority(selectedTask.priority.name)}>
                                 {priorities.map((priority) => (
-                                    <Option key={priority.id} value={String(priority.id)}>{priority.name}</Option>
+                                    <Option key={priority.id} value={String(priority.id)}>{Translator.translatePriority(priority.name)}</Option>
                                 ))}
                             </Select>
                         </Form.Item>

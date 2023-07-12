@@ -10,8 +10,10 @@ import CategoryPage from "./pages/CategoryPage";
 import ProfilePage from "./pages/ProfilePage";
 import {NotFoundPage} from "./pages/NotFoundPage";
 import ArchivePage from "./pages/ArchivePage";
+import EasterEggPage from "./pages/EasterEggPage";
 import categoryService from "./services/categoryService";
 import ModalForAuthorization from "./components/ModalForAuthorization";
+import AllTasksPage from "./pages/AllTasksPage";
 
 const {Header, Content, Sider} = Layout;
 
@@ -91,8 +93,10 @@ const App = () => {
                 <Content>
                     <Routes>
                         <Route path="/profile" element={<ProfilePage/>}/>
+                        <Route path="/tasks" element={<AllTasksPage/>}/>
                         <Route path="/archive" element={<ArchivePage/>}/>
-                        <Route path="/category/:id" element={<CategoryPage/>}/>
+                        <Route path="/category" element={<CategoryPage/>}/>
+                        <Route path="/easteregg" element={<EasterEggPage/>}/>
                         <Route path="*" element={<NotFoundPage/>}/>
                     </Routes>
                 </Content>

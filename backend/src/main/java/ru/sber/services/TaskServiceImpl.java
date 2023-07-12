@@ -58,7 +58,7 @@ public class TaskServiceImpl implements TaskService {
 
     private static boolean isNotify(Task task) {
         LocalDateTime nowTime = LocalDateTime.now();
-        LocalDateTime taskTime = task.getDateAndTimeOfTask();
+        LocalDateTime taskTime = task.getDate();
         if (taskTime == null) {
             return false;
         }

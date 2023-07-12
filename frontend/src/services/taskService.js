@@ -1,9 +1,24 @@
 import axios from "axios";
 import {set, setPriorities, setRegularities, setSelectedTask, setStatuses} from "../slices/taskSlice";
 import authHeader from "./auth-header";
-import {setSelectedCategory} from "../slices/categorySlice";
 
 const API_URL = "/tasks";
+
+const getAllTasks = (dispatch) => {
+    return axios.get(API_URL,{headers: authHeader()}).then((response) => {
+            dispatch(set(response.data))
+            return response.data;
+        },
+        (error) => {
+            const _content = (error.response && error.response.data) ||
+                error.message ||
+                error.toString();
+
+            console.error(_content)
+
+            dispatch(set([]));
+        });
+};
 
 const getTasksFromCategory = (category_id, dispatch) => {
     return axios.get(API_URL+`/categories?categoryId=${category_id}`,{headers: authHeader()}).then((response) => {
@@ -104,6 +119,7 @@ const selectTask = (task, dispatch) => {
 }
 
 const taskService = {
+    getAllTasks,
     getTasksFromCategory,
     getPriorities,
     getRegularities,
