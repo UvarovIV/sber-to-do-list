@@ -69,7 +69,6 @@ public class CategoryServiceImpl implements CategoryService{
         if (principal instanceof UserDetailsImpl) {
             return ((UserDetailsImpl)principal).getId();
         } else {
-            //return 1;
             throw new RuntimeException("Пользователь не найден");
         }
 

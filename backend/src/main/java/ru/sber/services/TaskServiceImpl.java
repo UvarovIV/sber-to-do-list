@@ -85,8 +85,8 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public boolean updateTask(Task task) {
         boolean taskExist = taskRepository.existsById(task.getId());
-        boolean categoryIsRight = categoryService.checkExistence(task.getCategory().getId());
-        if (taskExist && categoryIsRight) {
+
+        if (taskExist) {
             taskRepository.save(task);
             return true;
         }

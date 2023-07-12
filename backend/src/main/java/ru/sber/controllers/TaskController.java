@@ -72,6 +72,7 @@ public class TaskController {
     @GetMapping("/categories")
     public List<AbridgedTask> getTasksByCategory(@RequestParam long categoryId) {
         log.info("Вывод всех задач по категории");
+        log.info("Вывод всех задач по категории");
         return taskService.findAllByCategoryId(categoryId);
     }
 

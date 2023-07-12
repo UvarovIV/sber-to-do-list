@@ -18,6 +18,8 @@ public class AbridgedTask {
     Status status;
     Priority priority;
     Regularity regularity;
+    String categoryName;
+    Long categoryId;
 
     public AbridgedTask(Task task) {
         this.id = task.getId();
@@ -27,5 +29,7 @@ public class AbridgedTask {
         this.status = task.status;
         this.priority = task.priority;
         this.regularity = task.regularity;
+        this.categoryName = task.category.getName();
+        this.categoryId = task.category.getId();
     }
 }

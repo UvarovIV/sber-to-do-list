@@ -1,27 +1,35 @@
 import React from 'react';
 import { Layout, Avatar, Typography } from 'antd';
+import {useSelector} from "react-redux";
 
 const { Header, Content } = Layout;
 const { Title } = Typography;
 
 const ProfilePage = () => {
+
+    const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+
     const user = {
-        name: 'John Doe',
-        email: 'johndoe@example.com',
+        name: 'Test',
+        email: 'test@example.com',
         avatarUrl: 'https://example.com/avatar.jpg',
     };
 
-    return (
-        <Layout style={{ minHeight: '100vh' }}>
+    return (<>
+        {isLoggedIn ? (<Layout style={{ minHeight: '100vh' }}>
             <Header style={{ background: '#fff', padding: '16px', textAlign: 'center' }}>
-                <Avatar size={64} src={user.avatarUrl} />
+                <Avatar size={64}/>
                 <Title level={3}>{user.name}</Title>
                 <Title level={4}>{user.email}</Title>
             </Header>
             <Content style={{ margin: '16px' }}>
                 {/* Здесь вы можете разместить дополнительное содержимое для страницы профиля */}
             </Content>
-        </Layout>
+        </Layout>) :
+            (<div style={{textAlign: "center", fontSize: 30, marginTop: 30}}>
+                Пожалуйста авторизуйтесь или зарегистрируйтесь
+            </div>)}
+        </>
     );
 };
 

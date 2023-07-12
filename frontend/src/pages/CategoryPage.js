@@ -1,147 +1,148 @@
-import React, { useEffect, useState } from 'react';
-import {Card, Modal, Form, Input, DatePicker, Select, Button} from 'antd';
-import { useParams } from "react-router-dom";
-import { Scrollbar } from "react-scrollbars-custom";
-import { useDispatch } from "react-redux";
-import taskService from "../services/taskService";
+import React, {useEffect, useState} from 'react';
+import {Button, Card, Dropdown, Menu} from "antd";
+import {Scrollbar} from "react-scrollbars-custom";
 import categoryService from "../services/categoryService";
-
-const { Option } = Select;
+import ModalForUpdateTask from "../components/ModalForUpdateTask";
+import {useNavigate, useParams} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import taskService from "../services/taskService";
+import {DeleteOutlined, EditOutlined, EllipsisOutlined, PlusOutlined} from "@ant-design/icons";
+import ModalDeleteCategory from "../components/ModalForDeleteCategory";
+import ModalForAddTask from "../components/ModalForAddTask";
 
 const CategoryPage = () => {
-    const { id } = useParams();
 
-    const [tasks, setTasks] = useState([]);
-    const [selectedTask, setSelectedTask] = useState(null);
+    const {id} = useParams();
+
     const [isModalVisible, setIsModalVisible] = useState(false);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [showAddTaskModal, setShowAddTaskModal] = useState(false);
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const categories = useSelector((state) => state.categories.categories);
+    const selectedTask = useSelector((state) => state.tasks.selectedTask);
+    const selectedCategory = useSelector((state) => state.categories.selectedCategory);
+
+    const tasks = useSelector((state) => state.tasks.tasks);
+    const categoriesIds = categories.map((category) => category.id);
 
     useEffect(() => {
-        taskService.getTasksFromCategory(id, dispatch).then((data) => {
-            setTasks(data);
-            console.log(data);
-        });
-    }, [tasks]);
+        console.log(selectedCategory.id)
+        //Добавить categoriesIds в LocalStorage
+        if (categoriesIds.includes(selectedCategory.id)) {
+            taskService.getTasksFromCategory(id, dispatch);
+        } else {
+            navigate('/not_found');
+        }
+
+    }, [selectedCategory]);
 
     const openModal = (task) => {
-        setSelectedTask(task);
+        taskService.selectTask(task, dispatch)
         setIsModalVisible(true);
     };
 
     const closeModal = () => {
-        setSelectedTask(null);
+        taskService.selectTask(null, dispatch)
         setIsModalVisible(false);
     };
 
-    const onFinish = (values) => {
-        console.log(values);
-    };
-
-    const onChange = (value, dateString) => {
-        console.log('Selected Time: ', value);
-        console.log('Formatted Selected Time: ', dateString);
-    };
-    const onOk = (value) => {
-        console.log('onOk: ', value);
-    };
+    const closeAddTaskModal = () => {
+        setShowAddTaskModal(false)
+    }
 
     const handleDeleteCategory = () => {
-        categoryService.deleteCategory(id, dispatch)
+        categoryService.deleteCategory(id, dispatch);
+        setShowDeleteModal(true);
+        navigate("/profile")
+        categoryService.getCategories(dispatch);
     };
+
+    const handleShowDeleteModal = () => {
+        setShowDeleteModal(true);
+    };
+
+    const handleShowAddTaskModal = () => {
+        setShowAddTaskModal(true);
+    }
+
+    const handleCancelDeleteModal = () => {
+        setShowDeleteModal(false);
+    };
+
+    const handleMenuClick = (e) => {
+        switch (e.key) {
+            case "addTask":
+                handleShowAddTaskModal()
+                break;
+            case "editCategory":
+
+                break;
+            case "deleteCategory":
+                handleShowDeleteModal()
+                break;
+            default:
+                break;
+        }
+    };
+
+    const items = (
+        <Menu onClick={handleMenuClick}>
+            <Menu.Item key="addTask" icon={<PlusOutlined/>}>
+                Добавить задачу
+            </Menu.Item>
+            <Menu.Item key="editCategory" icon={<EditOutlined/>}>
+                Изменить категорию
+            </Menu.Item>
+            <Menu.Item key="deleteCategory" icon={<DeleteOutlined/>}>
+                Удалить категорию
+            </Menu.Item>
+        </Menu>
+    );
+
+    console.log(selectedCategory)
 
     return (
         <Scrollbar>
-            <div style={{ paddingBottom: 10, padding: 30 }}>
-                {/*<Button type="danger" onClick={handleDeleteCategory}>*/}
-                {/*    Удалить категорию*/}
-                {/*</Button>*/}
+            <div style={{position: "absolute", top: 20, right: 30}}>
+                <Dropdown overlay={items} trigger={["click"]}>
+                    <Button shape="circle" icon={<EllipsisOutlined/>} size="large"/>
+                </Dropdown>
+            </div>
+            <div style={{paddingBottom: 10, paddingTop: 20, paddingRight: 30, paddingLeft: 30}}>
+                <div style={{marginBottom: 10, fontSize: 30}}>
+                    {selectedCategory && selectedCategory.name ? selectedCategory.name : <>Имя не определено</>}
+                </div>
+
                 {tasks.map((task) => (
                     <Card
                         key={task.id}
-                        style={{ marginBottom: 10 }}
-                        onClick={() => openModal(task)} // Добавьте обработчик клика для открытия модального окна
+                        style={{marginBottom: 10}}
+                        onClick={() => openModal(task)}
                     >
                         {task.title}
-                        <br />
+                        <br/>
                         {task.dateAndTimeOfTask}
                     </Card>
                 ))}
             </div>
+            {selectedTask &&
+                <ModalForUpdateTask
+                    selectedTask={selectedTask}
+                    closeModal={closeModal}
+                />}
 
-            <Modal
-                open={isModalVisible}
-                onCancel={closeModal} // Добавьте обработчик для закрытия модального окна
-                footer={null}
-            >
-                {selectedTask && (
-                    <div>
-                        <h3>{selectedTask.title}</h3>
-                        <p>{selectedTask.description}</p>
-
-                        <Form
-                            onFinish={onFinish}
-                            labelCol={{ span: 6 }}
-                            wrapperCol={{ span: 16 }}
-                        >
-                            <Form.Item
-                                label="Название"
-                                name="taskName"
-                                initialValue={selectedTask.title}
-                                rules={[{ required: true, message: 'Введите название' }]}
-                            >
-                                <Input placeholder="Введите название" />
-                            </Form.Item>
-
-                            <Form.Item
-                                label="Описание"
-                                name="taskDescription"
-                                initialValue={selectedTask.description}
-                            >
-                                <Input.TextArea rows={4} placeholder="Введите описание" />
-                            </Form.Item>
-
-                            <Form.Item
-                                label="Дата"
-                                name="taskDate"
-                            >
-                                <DatePicker showTime onChange={onChange} onOk={onOk} />
-                            </Form.Item>
-
-                            <Form.Item
-                                label="Статус"
-                                name="taskStatus"
-                                initialValue={selectedTask.status}
-                            ><Select>
-                                <Option value="completed">Выполнено</Option>
-                                <Option value="in-progress">В процессе</Option>
-                                <Option value="new">Новая</Option>
-                            </Select>
-                            </Form.Item>
-
-                            <Form.Item
-                                label="Приоритет"
-                                name="taskPriority"
-                                initialValue={selectedTask.priority}
-                            >
-                                <Select>
-                                    <Option value="1">Очень низкий</Option>
-                                    <Option value="2">Низкий</Option>
-                                    <Option value="3">Средний</Option>
-                                    <Option value="4">Высокий</Option>
-                                    <Option value="5">Очень высокий</Option>
-                                </Select>
-                            </Form.Item>
-
-                            <Form.Item wrapperCol={{ offset: 6, span: 16 }}>
-                                <Button type="primary" htmlType="submit">
-                                    Сохранить
-                                </Button>
-                            </Form.Item>
-                        </Form>
-                    </div>
-                )}
-            </Modal>
+            <ModalForAddTask
+                visible={showAddTaskModal}
+                closeAddTaskModal={closeAddTaskModal}
+            />
+            <ModalDeleteCategory
+                visible={showDeleteModal}
+                onCancel={handleCancelDeleteModal}
+                onDelete={handleDeleteCategory}
+            />
         </Scrollbar>
     );
 };
