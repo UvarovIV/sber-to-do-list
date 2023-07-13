@@ -14,7 +14,6 @@ const SideBar = () => {
     const dispatch = useDispatch();
     const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
     const categories = useSelector((state) => state.categories.categories);
-    const selectedCategory = useSelector((state) => state.categories.selectedCategory);
 
     const showModal = () => {
         setVisible(true);

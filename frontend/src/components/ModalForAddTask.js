@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {Button, DatePicker, Form, Input, Modal, Select} from 'antd';
 import {useDispatch, useSelector} from "react-redux";
 import taskService from "../services/taskService";
-import Translator from "./Translator";
+import Translator from "../utils/Translator";
 
 const {Option} = Select;
 
@@ -64,6 +64,7 @@ const ModalForAddTask = ({visible, closeAddTaskModal}) => {
         <Modal open={visible} onCancel={() => {closeAddTaskModal(); form.resetFields()}} footer={null}>
 
                 <div>
+                    <div style={{textAlign: "center", fontSize: 26, marginBottom: 16}}>Добавление задачи</div>
                     <Form form={form} onFinish={onFinish} labelCol={{span: 6}} wrapperCol={{span: 16}}>
                         <Form.Item
                             label="Название"
@@ -121,7 +122,7 @@ const ModalForAddTask = ({visible, closeAddTaskModal}) => {
                             </Select>
                         </Form.Item>
 
-                        <Form.Item wrapperCol={{offset: 6, span: 16}}>
+                        <Form.Item wrapperCol={{offset: 10, span: 16}}>
                             <Button type="primary" htmlType="submit">
                                 Сохранить
                             </Button>

@@ -114,6 +114,21 @@ const updateTask = (category_id, task, dispatch) => {
         });
 };
 
+const deleteTask = (task, dispatch) => {
+
+    return axios.delete(API_URL+`/${task.id}`, {headers: authHeader()}).then(
+        () => {
+            getTasksFromCategory(task.categoryId, dispatch)
+        },
+        (error) => {
+            const _content = (error.response && error.response.data) ||
+                error.message ||
+                error.toString();
+
+            console.error(_content)
+        });
+};
+
 const selectTask = (task, dispatch) => {
     dispatch(setSelectedTask(task))
 }
@@ -126,6 +141,7 @@ const taskService = {
     getStatuses,
     createTask,
     updateTask,
+    deleteTask,
     selectTask,
 };
 

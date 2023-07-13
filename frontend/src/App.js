@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import {Button, Form, Layout} from 'antd';
+import {Button, Form, Layout, message} from 'antd';
 import authService from "./services/authService";
 import {useDispatch, useSelector} from "react-redux";
-import {logout} from "./slices/authSlice";
+import {login, logout} from "./slices/authSlice";
 import {Scrollbar} from 'react-scrollbars-custom';
 import SideBar from "./components/SideBar";
 import {Route, Routes, useNavigate} from "react-router-dom";
@@ -56,8 +56,17 @@ const App = () => {
             authService.register(registerData);
             form.resetFields();
         } else {
-            authService.login(values);
-            form.resetFields();
+            authService.login(values).then((user) => {
+                console.log(user)
+                dispatch(login(user))
+                navigate("/")
+            }, (error) => {
+                const _content = (error.response && error.response.data)
+                error.message ||
+                error.toString();
+                console.log(_content);
+                message.error("Неправильный логин или пароль");
+            })
         }
 
         setIsModalVisible(false);
@@ -81,36 +90,36 @@ const App = () => {
                 <Button style={{marginLeft: 10}} type="primary" onClick={showModal}>
                     {isLoggedIn ? 'Выйти' : 'Вход'}
                 </Button>
-            </Header><Layout style={{minHeight: '93vh'}}>
+            </Header>
+            <Layout style={{minHeight: '93vh'}}>
+                <Sider theme="light">
+                    <Scrollbar>
+                        <SideBar/>
+                    </Scrollbar>
+                </Sider>
 
-            <Sider theme="light">
-                <Scrollbar>
-                    <SideBar/>
-                </Scrollbar>
-            </Sider>
+                <Layout>
+                    <Content>
+                        <Routes>
+                            <Route path="/profile" element={<ProfilePage/>}/>
+                            <Route path="/tasks" element={<AllTasksPage/>}/>
+                            <Route path="/archive" element={<ArchivePage/>}/>
+                            <Route path="/category" element={<CategoryPage/>}/>
+                            <Route path="/easteregg" element={<EasterEggPage/>}/>
+                            <Route path="*" element={<NotFoundPage/>}/>
+                        </Routes>
+                    </Content>
+                </Layout>
 
-            <Layout>
-                <Content>
-                    <Routes>
-                        <Route path="/profile" element={<ProfilePage/>}/>
-                        <Route path="/tasks" element={<AllTasksPage/>}/>
-                        <Route path="/archive" element={<ArchivePage/>}/>
-                        <Route path="/category" element={<CategoryPage/>}/>
-                        <Route path="/easteregg" element={<EasterEggPage/>}/>
-                        <Route path="*" element={<NotFoundPage/>}/>
-                    </Routes>
-                </Content>
+                <ModalForAuthorization
+                    isModalVisible={isModalVisible}
+                    handleCancel={handleCancel}
+                    onFinish={onFinish}
+                    handleSwitchForm={handleSwitchForm}
+                    form={form}
+                    isRegisterForm={isRegisterForm}
+                />
             </Layout>
-
-            <ModalForAuthorization
-                isModalVisible={isModalVisible}
-                handleCancel={handleCancel}
-                onFinish={onFinish}
-                handleSwitchForm={handleSwitchForm}
-                form={form}
-                isRegisterForm={isRegisterForm}
-            />
-        </Layout>
         </Layout>
     );
 };

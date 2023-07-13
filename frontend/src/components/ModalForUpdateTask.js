@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {Button, DatePicker, Form, Input, Modal, Select} from 'antd';
 import {useDispatch, useSelector} from "react-redux";
 import taskService from "../services/taskService";
-import Translator from "./Translator";
+import Translator from "../utils/Translator";
 
 const {Option} = Select;
 
@@ -50,20 +50,11 @@ const ModalForUpdateTask = ({selectedTask, closeModal}) => {
     const regularities = useSelector((state) => state.tasks.regularities);
     const priorities = useSelector((state) => state.tasks.priorities);
 
-    const onChange = (value, dateString) => {
-        console.log('Selected Time: ', value);
-        console.log('Formatted Selected Time: ', dateString);
-    };
-    const onOk = (value) => {
-        console.log('onOk: ', value);
-    };
-
     return (
         <Modal open={!!selectedTask} onCancel={closeModal} footer={null}>
             {selectedTask && (
                 <div>
-                    <h3>{selectedTask.title}</h3>
-                    <p>{selectedTask.description}</p>
+                    <div style={{textAlign: "center", fontSize: 26, marginBottom: 16}}>Изменение задачи</div>
                     <Form onFinish={onFinish} labelCol={{span: 6}} wrapperCol={{span: 16}}>
                         <Form.Item
                             label="Название"
@@ -86,7 +77,7 @@ const ModalForUpdateTask = ({selectedTask, closeModal}) => {
                             name="taskDate"
 
                         >
-                            <DatePicker placeholder={selectedTask.date} showTime onChange={onChange} onOk={onOk}/>
+                            <DatePicker placeholder={selectedTask.date} showTime/>
                         </Form.Item>
 
                         <Form.Item
@@ -124,7 +115,7 @@ const ModalForUpdateTask = ({selectedTask, closeModal}) => {
                             </Select>
                         </Form.Item>
 
-                        <Form.Item wrapperCol={{offset: 6, span: 16}}>
+                        <Form.Item wrapperCol={{offset: 10, span: 16}}>
                             <Button type="primary" htmlType="submit">
                                 Сохранить
                             </Button>

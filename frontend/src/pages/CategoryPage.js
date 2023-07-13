@@ -1,20 +1,30 @@
 import React, {useEffect, useState} from 'react';
-import {Button, Card, Dropdown, Menu} from "antd";
+import {Button, Dropdown, Menu} from "antd";
 import {Scrollbar} from "react-scrollbars-custom";
 import categoryService from "../services/categoryService";
 import ModalForUpdateTask from "../components/ModalForUpdateTask";
-import {useNavigate, useParams} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import taskService from "../services/taskService";
 import {DeleteOutlined, EditOutlined, EllipsisOutlined, PlusOutlined} from "@ant-design/icons";
 import ModalDeleteCategory from "../components/ModalForDeleteCategory";
 import ModalForAddTask from "../components/ModalForAddTask";
+import SortButtons from "../components/SortButtons";
+import sortTasks from "../utils/SortUtils";
+import TaskCard from "../components/TaskCard";
+import filterTasks from "../utils/FilterUtils";
+import FilterSection from "../components/FilterSection";
 
 const CategoryPage = () => {
 
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [showAddTaskModal, setShowAddTaskModal] = useState(false);
+    const [sortBy, setSortBy] = useState(null);
+    const [sortDirection, setSortDirection] = useState('asc');
+    const [searchValue, setSearchValue] = useState('');
+    const [selectedDate, setSelectedDate] = useState(null);
+    const [selectedStatus, setSelectedStatus] = useState(null);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -26,6 +36,9 @@ const CategoryPage = () => {
 
     useEffect(() => {
         taskService.getTasksFromCategory(selectedCategory.id, dispatch);
+        setSearchValue("")
+        setSelectedDate(null)
+        setSelectedStatus(null)
     }, [selectedCategory]);
 
     const openModal = (task) => {
@@ -77,6 +90,17 @@ const CategoryPage = () => {
         }
     };
 
+    const sortedTasks = sortTasks(tasks, sortBy, sortDirection)
+
+    const handleSort = (newSortBy) => {
+        if (newSortBy === sortBy) {
+            setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+        } else {
+            setSortBy(newSortBy);
+            setSortDirection('asc');
+        }
+    };
+
     const items = (
         <Menu onClick={handleMenuClick}>
             <Menu.Item key="addTask" icon={<PlusOutlined/>}>
@@ -91,6 +115,20 @@ const CategoryPage = () => {
         </Menu>
     );
 
+    const handleStatusChange = (value) => {
+        setSelectedStatus(value);
+    };
+
+    const handleSearch = (value) => {
+        setSearchValue(value);
+    };
+
+    const handleDateChange = (date) => {
+        setSelectedDate(date);
+    };
+
+    const filteredTasks = filterTasks(sortedTasks, searchValue, selectedDate, selectedStatus);
+
     return (
         <Scrollbar>
             <div style={{position: "absolute", top: 20, right: 30}}>
@@ -102,17 +140,15 @@ const CategoryPage = () => {
                 <div style={{marginBottom: 10, fontSize: 30}}>
                     {selectedCategory && selectedCategory.name ? selectedCategory.name : <>Имя не определено</>}
                 </div>
+                <SortButtons handleSort={handleSort} />
 
-                {tasks.map((task) => (
-                    <Card
-                        key={task.id}
-                        style={{marginBottom: 10}}
-                        onClick={() => openModal(task)}
-                    >
-                        {task.title}
-                        <br/>
-                        {task.date}
-                    </Card>
+                <FilterSection
+                    handleSearch={handleSearch}
+                    handleDateChange={handleDateChange}
+                    handleStatusChange={handleStatusChange}/>
+
+                {filteredTasks.map((task) => (
+                    <TaskCard key={task.id} task={task} openModal={openModal} />
                 ))}
             </div>
             {selectedTask &&
