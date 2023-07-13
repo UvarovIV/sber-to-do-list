@@ -14,12 +14,14 @@ import sortTasks from "../utils/SortUtils";
 import TaskCard from "../components/TaskCard";
 import filterTasks from "../utils/FilterUtils";
 import FilterSection from "../components/FilterSection";
+import ModalForRenameCategory from "../components/ModalForRenameCategory";
 
 const CategoryPage = () => {
 
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [showAddTaskModal, setShowAddTaskModal] = useState(false);
+    const [showRenameModal, setShowRenameModal] = useState(false);
     const [sortBy, setSortBy] = useState(null);
     const [sortDirection, setSortDirection] = useState('asc');
     const [searchValue, setSearchValue] = useState('');
@@ -34,12 +36,7 @@ const CategoryPage = () => {
 
     const tasks = useSelector((state) => state.tasks.tasks);
 
-    useEffect(() => {
-        taskService.getTasksFromCategory(selectedCategory.id, dispatch);
-        setSearchValue("")
-        setSelectedDate(null)
-        setSelectedStatus(null)
-    }, [selectedCategory]);
+
 
     const openModal = (task) => {
         taskService.selectTask(task, dispatch)
@@ -54,6 +51,11 @@ const CategoryPage = () => {
     const closeAddTaskModal = () => {
         setShowAddTaskModal(false)
     }
+
+    const handleRenameCategory = (newName) => {
+        categoryService.updateCategory({id: selectedCategory.id, name: newName}, dispatch);
+        setShowRenameModal(false);
+    };
 
     const handleDeleteCategory = () => {
         categoryService.deleteCategory(selectedCategory.id, dispatch);
@@ -74,13 +76,21 @@ const CategoryPage = () => {
         setShowDeleteModal(false);
     };
 
+    const handleShowRenameModal = () => {
+        setShowRenameModal(true);
+    };
+
+    const handleCancelRenameModal = () => {
+        setShowRenameModal(false);
+    };
+
     const handleMenuClick = (e) => {
         switch (e.key) {
             case "addTask":
                 handleShowAddTaskModal()
                 break;
             case "editCategory":
-
+                handleShowRenameModal();
                 break;
             case "deleteCategory":
                 handleShowDeleteModal()
@@ -129,6 +139,13 @@ const CategoryPage = () => {
 
     const filteredTasks = filterTasks(sortedTasks, searchValue, selectedDate, selectedStatus);
 
+    useEffect(() => {
+        taskService.getTasksFromCategory(selectedCategory.id, dispatch);
+        setSearchValue("")
+        setSelectedDate(null)
+        setSelectedStatus(null)
+    }, [selectedCategory]);
+
     return (
         <Scrollbar>
             <div style={{position: "absolute", top: 20, right: 30}}>
@@ -165,6 +182,11 @@ const CategoryPage = () => {
                 visible={showDeleteModal}
                 onCancel={handleCancelDeleteModal}
                 onDelete={handleDeleteCategory}
+            />
+            <ModalForRenameCategory
+                visible={showRenameModal}
+                onCancel={handleCancelRenameModal}
+                onSubmit={handleRenameCategory}
             />
         </Scrollbar>
     );

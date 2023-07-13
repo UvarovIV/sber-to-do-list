@@ -22,6 +22,10 @@ const getCategories = (dispatch) => {
 
 const createCategory = (category, dispatch) => {
 
+    if (category.name === 'Архив' || category.name === 'архив') {
+        category = {name: 'Архив1'}
+    }
+
     return axios.post(API_URL, category, {headers: authHeader()}).then(
         () => {
             getCategories(dispatch)
@@ -36,6 +40,11 @@ const createCategory = (category, dispatch) => {
 };
 
 const updateCategory = (category, dispatch) => {
+
+    if (category.name === 'Архив' || category.name === 'архив') {
+        category = {id: category.id, name: 'Архив1'}
+    }
+
     return axios.put(API_URL, category, {headers: authHeader()}).then(
         () => {
             getCategories(dispatch)

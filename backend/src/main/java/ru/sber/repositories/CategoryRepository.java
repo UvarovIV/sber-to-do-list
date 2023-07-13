@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import ru.sber.entities.Category;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Хранилище данных о категориях

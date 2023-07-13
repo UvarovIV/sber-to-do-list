@@ -40,4 +40,5 @@ public interface CategoryService {
     boolean deleteCategoryById(long categoryId);
 
     boolean checkExistence(long categoryId);
+
 }

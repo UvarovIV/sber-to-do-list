@@ -1,17 +1,19 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Card, Dropdown, Menu} from 'antd';
 import {DownOutlined, EllipsisOutlined, UpOutlined} from '@ant-design/icons';
 import Translator from "../utils/Translator";
 import taskService from "../services/taskService";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 
 const TaskCard = ({task, openModal}) => {
 
     const dispatch = useDispatch();
     const [isCardExpanded, setIsCardExpanded] = useState(false);
+    const selectedCategory = useSelector((state) => state.categories.selectedCategory);
 
     const handleDelete = () => {
-        taskService.deleteTask(task, dispatch);
+        console.log(selectedCategory)
+        taskService.deleteTask(selectedCategory.id, task, dispatch);
     };
 
     const handleEdit = () => {

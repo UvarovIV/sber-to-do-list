@@ -104,4 +104,19 @@ public class TaskServiceImpl implements TaskService {
         }
         return false;
     }
+
+    @Override
+    public List<AbridgedTask> findTasksInArchive() {
+        Optional<Category> archive = categoryService
+                .findAll()
+                .stream()
+                .filter(category -> (category.getName().equals("Архив")))
+                .findFirst();
+
+        return archive
+                .map(category -> findAllByCategoryId(category.getId()))
+                .orElse(List.of());
+    }
+
+
 }

@@ -36,6 +36,22 @@ const getTasksFromCategory = (category_id, dispatch) => {
         });
 };
 
+const getTasksFromArchive = (dispatch) => {
+    return axios.get(API_URL+`/archive`,{headers: authHeader()}).then((response) => {
+            dispatch(set(response.data))
+            return response.data;
+        },
+        (error) => {
+            const _content = (error.response && error.response.data) ||
+                error.message ||
+                error.toString();
+
+            console.error(_content)
+
+            dispatch(set([]));
+        });
+};
+
 const getStatuses = (dispatch) => {
     return axios.get(API_URL+'/statuses',{headers: authHeader()}).then((response) => {
             dispatch(setStatuses(response.data))
@@ -103,7 +119,13 @@ const updateTask = (category_id, task, dispatch) => {
 
     return axios.put(API_URL, task, {headers: authHeader()}).then(
         () => {
-            getTasksFromCategory(category_id, dispatch)
+            if (category_id === -1) {
+                getAllTasks(dispatch)
+            } else if (category_id === -2) {
+                getTasksFromArchive(dispatch)
+            } else {
+                getTasksFromCategory(task.category.id, dispatch)
+            }
         },
         (error) => {
             const _content = (error.response && error.response.data) ||
@@ -114,11 +136,17 @@ const updateTask = (category_id, task, dispatch) => {
         });
 };
 
-const deleteTask = (task, dispatch) => {
+const deleteTask = (category_id, task, dispatch) => {
 
     return axios.delete(API_URL+`/${task.id}`, {headers: authHeader()}).then(
         () => {
-            getTasksFromCategory(task.categoryId, dispatch)
+            if (category_id === -1) {
+                getAllTasks(dispatch)
+            } else if (category_id === -2) {
+                getTasksFromArchive(dispatch)
+            } else {
+                getTasksFromCategory(task.category.id, dispatch)
+            }
         },
         (error) => {
             const _content = (error.response && error.response.data) ||
@@ -135,6 +163,7 @@ const selectTask = (task, dispatch) => {
 
 const taskService = {
     getAllTasks,
+    getTasksFromArchive,
     getTasksFromCategory,
     getPriorities,
     getRegularities,

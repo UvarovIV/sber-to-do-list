@@ -9,6 +9,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import ru.sber.entities.Category;
 import ru.sber.entities.ERole;
 import ru.sber.entities.Role;
 import ru.sber.entities.User;
@@ -16,6 +17,7 @@ import ru.sber.entities.request.LoginRequest;
 import ru.sber.entities.request.SignupRequest;
 import ru.sber.entities.response.JwtResponse;
 import ru.sber.entities.response.MessageResponse;
+import ru.sber.repositories.CategoryRepository;
 import ru.sber.repositories.RoleRepository;
 import ru.sber.repositories.UserRepository;
 import ru.sber.security.jwt.JwtUtils;
@@ -35,15 +37,17 @@ public class AuthController {
     private final AuthenticationManager authenticationManager;
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final CategoryRepository categoryRepository;
     private final PasswordEncoder encoder;
     private final JwtUtils jwtUtils;
 
     @Autowired
     public AuthController(AuthenticationManager authenticationManager, UserRepository userRepository,
-                          RoleRepository roleRepository, PasswordEncoder encoder, JwtUtils jwtUtils) {
+                          RoleRepository roleRepository, CategoryRepository categoryRepository, PasswordEncoder encoder, JwtUtils jwtUtils) {
         this.authenticationManager = authenticationManager;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.categoryRepository = categoryRepository;
         this.encoder = encoder;
         this.jwtUtils = jwtUtils;
     }
@@ -104,6 +108,7 @@ public class AuthController {
 
         user.setRoles(roles);
         userRepository.save(user);
+        categoryRepository.save(new Category(0L, "Архив", user));
 
         return ResponseEntity.ok(new MessageResponse("Пользователь успешно зарегистрирован"));
     }

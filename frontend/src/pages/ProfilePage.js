@@ -8,18 +8,13 @@ const { Title } = Typography;
 const ProfilePage = () => {
 
     const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-
-    const user = {
-        name: 'Test',
-        email: 'test@example.com',
-        avatarUrl: 'https://example.com/avatar.jpg',
-    };
+    const user = useSelector((state) => state.auth.user);
 
     return (<>
         {isLoggedIn ? (<Layout style={{ minHeight: '100vh' }}>
             <Header style={{ background: '#fff', padding: '16px', textAlign: 'center' }}>
                 <Avatar size={64}/>
-                <Title level={3}>{user.name}</Title>
+                <Title level={3}>{user.username}</Title>
                 <Title level={4}>{user.email}</Title>
             </Header>
             <Content style={{ margin: '16px' }}>

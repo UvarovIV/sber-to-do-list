@@ -72,9 +72,15 @@ public class TaskController {
     @GetMapping("/categories")
     public List<AbridgedTask> getTasksByCategory(@RequestParam long categoryId) {
         log.info("Вывод всех задач по категории");
-        log.info("Вывод всех задач по категории");
         return taskService.findAllByCategoryId(categoryId);
     }
+
+    @GetMapping("/archive")
+    public List<AbridgedTask> getTasksInArchive() {
+        log.info("Вывод всех задач по категории");
+        return taskService.findTasksInArchive();
+    }
+
 
     /**
      * Метод для получения списка задач для уведомлений по идентификатору пользователя.

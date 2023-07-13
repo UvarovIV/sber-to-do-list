@@ -54,4 +54,6 @@ public interface TaskService {
      * @return Возвращает статус удаления
      */
     boolean deleteTaskById(long taskId);
+
+    List<AbridgedTask> findTasksInArchive();
 }

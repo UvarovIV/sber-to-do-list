@@ -44,10 +44,10 @@ const SideBar = () => {
                 </Menu.Item>
                 {isLoggedIn ?
                     (<>
-                        <Menu.Item key="tasks" icon={<InboxOutlined/>}>
+                        <Menu.Item key="tasks" icon={<InboxOutlined/>} onClick={() => setCategory({id: -1, name: "Задачи"})}>
                             <Link to="/tasks">Все задачи</Link>
                         </Menu.Item>
-                        <Menu.Item key="archive" icon={<InboxOutlined/>}>
+                        <Menu.Item key="archive" icon={<InboxOutlined/>} onClick={() => setCategory({id: -2, name: "Архив"})}>
                             <Link to="/archive">Архив</Link>
                         </Menu.Item>
                         <SubMenu key="categories" icon={<FolderOutlined/>} title="Категории">

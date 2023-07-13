@@ -10,7 +10,7 @@ export const categoriesSlice = createSlice({
     },
     reducers: {
         setAllCategories: (state, action) => {
-            state.categories = action.payload;
+            state.categories = action.payload.filter(category => category.name !== 'Архив');
         },
         setSelectedCategory: (state, action) => {
             state.selectedCategory = action.payload;

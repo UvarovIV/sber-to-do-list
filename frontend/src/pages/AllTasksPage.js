@@ -25,7 +25,7 @@ const AllTasksPage = () => {
 
     useEffect(() => {
         taskService.getAllTasks(dispatch);
-    }, []);
+    }, [selectedTask]);
 
     const openModal = (task) => {
         taskService.selectTask(task, dispatch)
