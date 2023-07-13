@@ -36,6 +36,7 @@ const ModalForUpdateTask = ({selectedTask, closeModal}) => {
                 id: status
             },
         }, dispatch)
+        dispatch(closeModal)
     };
 
     const dispatch = useDispatch();
@@ -75,7 +76,6 @@ const ModalForUpdateTask = ({selectedTask, closeModal}) => {
                         <Form.Item
                             label="Дата"
                             name="taskDate"
-
                         >
                             <DatePicker placeholder={selectedTask.date} showTime/>
                         </Form.Item>

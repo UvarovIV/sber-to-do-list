@@ -124,7 +124,7 @@ const updateTask = (category_id, task, dispatch) => {
             } else if (category_id === -2) {
                 getTasksFromArchive(dispatch)
             } else {
-                getTasksFromCategory(task.category.id, dispatch)
+                getTasksFromCategory(category_id, dispatch)
             }
         },
         (error) => {
@@ -145,7 +145,7 @@ const deleteTask = (category_id, task, dispatch) => {
             } else if (category_id === -2) {
                 getTasksFromArchive(dispatch)
             } else {
-                getTasksFromCategory(task.category.id, dispatch)
+                getTasksFromCategory(category_id, dispatch)
             }
         },
         (error) => {
@@ -156,6 +156,35 @@ const deleteTask = (category_id, task, dispatch) => {
             console.error(_content)
         });
 };
+
+const moveTaskToArchive = (category_id, archive_id, selectedTask, dispatch) => {
+    const task_id = selectedTask.id;
+    const title = selectedTask.title;
+    const description = selectedTask.description;
+    const date = selectedTask.date;
+    const regularity = selectedTask.regularity.id
+    const status = selectedTask.status.id
+    const priority = selectedTask.priority.id
+    taskService.updateTask(category_id, {
+        id: task_id,
+        date: date,
+        description: description,
+        title: title,
+        category: {
+            id: archive_id
+        },
+        regularity: {
+            id: regularity
+        },
+        priority: {
+            id: priority
+        },
+        status: {
+            id: status
+        },
+    }, dispatch)
+
+}
 
 const selectTask = (task, dispatch) => {
     dispatch(setSelectedTask(task))
@@ -171,6 +200,7 @@ const taskService = {
     createTask,
     updateTask,
     deleteTask,
+    moveTaskToArchive,
     selectTask,
 };
 

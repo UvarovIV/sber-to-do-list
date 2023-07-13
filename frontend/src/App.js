@@ -59,7 +59,7 @@ const App = () => {
             authService.login(values).then((user) => {
                 console.log(user)
                 dispatch(login(user))
-                navigate("/")
+                navigate("/profile")
             }, (error) => {
                 const _content = (error.response && error.response.data)
                 error.message ||

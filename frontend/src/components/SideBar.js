@@ -54,7 +54,7 @@ const SideBar = () => {
                             <Menu.Item key="addCategory" icon={<PlusOutlined/>} title="Добавить" onClick={showModal}>
                                 Добавить
                             </Menu.Item>
-                            {categories.map((category) => (
+                            {categories.filter(category => category.name !== 'Архив').map((category) => (
                                 <Menu.Item key={`category/${category.id}`} icon={<FolderOutlined/>}
                                            title={category.name} onClick={() => setCategory({id: category.id, name: category.name})}>
                                     <Link to={`/category`}>{category.name}</Link>
