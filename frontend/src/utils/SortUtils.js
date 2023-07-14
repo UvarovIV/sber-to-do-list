@@ -1,7 +1,9 @@
 const sortTasks = (tasks, sortBy, sortDirection) => {
     return [...tasks].sort((a, b) => {
         let result;
-        if (sortBy === 'status') {
+        if (sortBy === null) {
+            result = b.id - a.id;
+        } else if (sortBy === 'status') {
             result = a.status.id - b.status.id;
         } else if (sortBy === 'priority') {
             result = a.priority.id - b.priority.id;

@@ -10,7 +10,6 @@ import CategoryPage from "./pages/CategoryPage";
 import ProfilePage from "./pages/ProfilePage";
 import {NotFoundPage} from "./pages/NotFoundPage";
 import ArchivePage from "./pages/ArchivePage";
-import EasterEggPage from "./pages/EasterEggPage";
 import categoryService from "./services/categoryService";
 import ModalForAuthorization from "./components/ModalForAuthorization";
 import AllTasksPage from "./pages/AllTasksPage";
@@ -59,7 +58,7 @@ const App = () => {
             authService.login(values).then((user) => {
                 console.log(user)
                 dispatch(login(user))
-                navigate("/profile")
+                navigate("/tasks")
             }, (error) => {
                 const _content = (error.response && error.response.data)
                 error.message ||
@@ -105,7 +104,6 @@ const App = () => {
                             <Route path="/tasks" element={<AllTasksPage/>}/>
                             <Route path="/archive" element={<ArchivePage/>}/>
                             <Route path="/category" element={<CategoryPage/>}/>
-                            <Route path="/easteregg" element={<EasterEggPage/>}/>
                             <Route path="*" element={<NotFoundPage/>}/>
                         </Routes>
                     </Content>

@@ -60,7 +60,7 @@ const CategoryPage = () => {
     const handleDeleteCategory = () => {
         categoryService.deleteCategory(selectedCategory.id, dispatch);
         setShowDeleteModal(true);
-        navigate("/profile")
+        navigate("/tasks")
         categoryService.getCategories(dispatch);
     };
 
@@ -163,8 +163,14 @@ const CategoryPage = () => {
                     handleSearch={handleSearch}
                     handleDateChange={handleDateChange}
                     handleStatusChange={handleStatusChange}/>
-
-                {filteredTasks.map((task) => (
+                <h2 style={{marginBottom: 10, marginTop: 10}}>Невыполненные задачи</h2>
+                {filteredTasks.filter(task => task.status.name !== "COMPLETED").length === 0 && <div>Задач ещё нет</div>}
+                {filteredTasks.filter(task => task.status.name !== "COMPLETED").map((task) => (
+                    <TaskCard key={task.id} task={task} openModal={openModal} />
+                ))}
+                <h2 style={{marginBottom: 10, marginTop: 10}}>Выполненные задачи</h2>
+                {filteredTasks.filter(task => task.status.name === "COMPLETED").length === 0 && <div>Задач ещё нет</div>}
+                {filteredTasks.filter(task => task.status.name === "COMPLETED").map((task) => (
                     <TaskCard key={task.id} task={task} openModal={openModal} />
                 ))}
             </div>

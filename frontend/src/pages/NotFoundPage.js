@@ -22,7 +22,6 @@ export const NotFoundPage = () => {
     }, [isArrowLeftPressed, isArrowUpPressed, isArrowRightPressed, isArrowDownPressed]);
 
     const handleClick = () => {
-        console.log(count)
         if (count === 1) {
             setText("Эй ты, да, ты, давай ещё раз")
         }
@@ -37,9 +36,6 @@ export const NotFoundPage = () => {
         }
         if (count === 5) {
             setText("Кажется мы уже близко")
-        }
-        if (count === 6) {
-            setText("О нет, ты всё сломал, но я знаю, где есть ещё одна такая")
         }
 
         setCount(count + 1);
@@ -56,9 +52,10 @@ export const NotFoundPage = () => {
                 : <div>Страница не найдена</div>}
             extra={
                 <div>
-                    <Button style={{marginBottom: 15}} type="primary"><Link to="/profile">Назад на главную</Link></Button>
+                    <Button style={{marginBottom: 15}} type="primary"><Link to="/tasks">Назад на главную</Link></Button>
                     <br/>
-                    {isAllArrowsPressed || (count > 0 && count < 7) ? <Button onClick={handleClick} type="primary"><Link to="/notfoundpage">Войти в неизвестность</Link></Button> : <></>}
+                    {isAllArrowsPressed || (count > 0 && count < 6) ? <Button onClick={handleClick} type="primary"><Link to="/notfoundpage">Войти в неизвестность</Link></Button> : <></>}
+                    {count === 6 ? <Button onClick={handleClick} type="primary"><Link to="https://youtu.be/JhigElj5Jto">Войти в неизвестность</Link></Button> : <></>}
                 </div>
             }
         />

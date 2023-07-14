@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { Card, Dropdown, Menu } from 'antd';
-import { DownOutlined, EllipsisOutlined, UpOutlined } from '@ant-design/icons';
+import React, {useState} from 'react';
+import {Card, Dropdown, Menu} from 'antd';
+import {DownOutlined, EllipsisOutlined, UpOutlined} from '@ant-design/icons';
 import Translator from "../utils/Translator";
 import taskService from "../services/taskService";
-import { useDispatch, useSelector } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 
 const TaskCard = ({ task, openModal }) => {
 

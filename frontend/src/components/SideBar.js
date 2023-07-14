@@ -13,6 +13,7 @@ const SideBar = () => {
     const [visible, setVisible] = useState(false);
     const dispatch = useDispatch();
     const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+    const user = useSelector((state) => state.auth.user);
     const categories = useSelector((state) => state.categories.categories);
 
     const showModal = () => {
@@ -39,8 +40,8 @@ const SideBar = () => {
     return (
         <div>
             <Menu defaultSelectedKeys={["1"]} defaultOpenKeys={["sub1"]} mode="inline">
-                <Menu.Item key="profile" icon={<UserOutlined/>}>
-                    <Link to="/profile">Профиль</Link>
+                <Menu.Item key="profile" icon={<UserOutlined/>} >
+                    {user ? user.username : "Аккаунт"}
                 </Menu.Item>
                 {isLoggedIn ?
                     (<>
