@@ -9,6 +9,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import ru.sber.entities.Category;
 import ru.sber.entities.ERole;
 import ru.sber.entities.Role;
 import ru.sber.entities.User;
@@ -16,6 +17,7 @@ import ru.sber.entities.request.LoginRequest;
 import ru.sber.entities.request.SignupRequest;
 import ru.sber.entities.response.JwtResponse;
 import ru.sber.entities.response.MessageResponse;
+import ru.sber.repositories.CategoryRepository;
 import ru.sber.repositories.RoleRepository;
 import ru.sber.repositories.UserRepository;
 import ru.sber.security.jwt.JwtUtils;
@@ -29,22 +31,23 @@ import java.util.stream.Collectors;
 /**
  * Контроллер для аутентификации и регистрации пользователей.
  */
-@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
     private final AuthenticationManager authenticationManager;
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final CategoryRepository categoryRepository;
     private final PasswordEncoder encoder;
     private final JwtUtils jwtUtils;
 
     @Autowired
     public AuthController(AuthenticationManager authenticationManager, UserRepository userRepository,
-                          RoleRepository roleRepository, PasswordEncoder encoder, JwtUtils jwtUtils) {
+                          RoleRepository roleRepository, CategoryRepository categoryRepository, PasswordEncoder encoder, JwtUtils jwtUtils) {
         this.authenticationManager = authenticationManager;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.categoryRepository = categoryRepository;
         this.encoder = encoder;
         this.jwtUtils = jwtUtils;
     }
@@ -94,36 +97,18 @@ public class AuthController {
             return ResponseEntity.badRequest().body(new MessageResponse("Email уже используется"));
         }
 
-        // Создаем нового пользователя
         User user = new User(signUpRequest.getUsername(), signUpRequest.getEmail(),
                 encoder.encode(signUpRequest.getPassword()));
 
-        Set<String> strRoles = signUpRequest.getRole();
         Set<Role> roles = new HashSet<>();
 
-        if (strRoles == null) {
-            Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-                    .orElseThrow(() -> new RuntimeException("Роль не найдена"));
-            roles.add(userRole);
-        } else {
-            strRoles.forEach(role -> {
-                switch (role) {
-                    case "admin":
-                        Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
-                                .orElseThrow(() -> new RuntimeException("Роль не найдена"));
-                        roles.add(adminRole);
-
-                        break;
-                    default:
-                        Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-                                .orElseThrow(() -> new RuntimeException("Роль не найдена"));
-                        roles.add(userRole);
-                }
-            });
-        }
+        Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+                .orElseThrow(() -> new RuntimeException("Роль не найдена"));
+        roles.add(userRole);
 
         user.setRoles(roles);
         userRepository.save(user);
+        categoryRepository.save(new Category(0L, "Архив", user));
 
         return ResponseEntity.ok(new MessageResponse("Пользователь успешно зарегистрирован"));
     }

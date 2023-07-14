@@ -1,5 +1,6 @@
 package ru.sber.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -12,18 +13,23 @@ public class AbridgedTask {
     private final Long id;
     String title;
     String description;
-    LocalDateTime dateAndTimeOfTask;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    LocalDateTime date;
     Status status;
     Priority priority;
     Regularity regularity;
+    String categoryName;
+    Long categoryId;
 
     public AbridgedTask(Task task) {
         this.id = task.getId();
         this.title = task.title;
         this.description = task.description;
-        this.dateAndTimeOfTask = task.dateAndTimeOfTask;
+        this.date = task.date;
         this.status = task.status;
         this.priority = task.priority;
         this.regularity = task.regularity;
+        this.categoryName = task.category.getName();
+        this.categoryId = task.category.getId();
     }
 }

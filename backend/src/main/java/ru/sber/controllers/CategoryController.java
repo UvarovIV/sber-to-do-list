@@ -3,6 +3,7 @@ package ru.sber.controllers;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.sber.entities.Category;
 import ru.sber.services.CategoryService;
@@ -14,7 +15,6 @@ import java.util.List;
  * Контроллер для работы с категориями.
  */
 @Slf4j
-@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/categories")
 public class CategoryController {
@@ -40,12 +40,11 @@ public class CategoryController {
     /**
      * Метод для получения списка категорий по идентификатору пользователя.
      *
-     * @param userId Уникальный идентификатор пользователя
      * @return Возвращает список категорий
      */
-    @GetMapping("/{userId}")
-    public ResponseEntity<List<Category>> getCategories(@PathVariable long userId) {
-        return ResponseEntity.ok().body(categoryService.findAllByUserId(userId));
+    @GetMapping()
+    public ResponseEntity<List<Category>> getCategories() {
+        return ResponseEntity.ok().body(categoryService.findAll());
     }
 
     /**

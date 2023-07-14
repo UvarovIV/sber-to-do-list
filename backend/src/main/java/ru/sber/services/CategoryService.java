@@ -19,10 +19,9 @@ public interface CategoryService {
     /**
      * Ищет все категории пользователя
      *
-     * @param userId Уникальный идентификатор пользователя
      * @return Возвращает список найденных категорий
      */
-    List<Category> findAllByUserId(long userId);
+    List<Category> findAll();
 
     /**
      * Обновляет информацию о категории
@@ -39,4 +38,7 @@ public interface CategoryService {
      * @return Возвращает статус удаления
      */
     boolean deleteCategoryById(long categoryId);
+
+    boolean checkExistence(long categoryId);
+
 }

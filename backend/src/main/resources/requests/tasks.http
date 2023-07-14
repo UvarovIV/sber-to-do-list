@@ -1,19 +1,21 @@
 ###
-GET localhost:8080/tasks?userId=1
+GET localhost:8080/tasks
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJObzIxMiIsImlhdCI6MTY4ODkwMjcwNywiZXhwIjoxNjg4OTg5MTA3fQ.hs9lq6w0eYejSlhqYWwrOGmqdUBhdnKH8FsPP1Pbm38
 
 ###
 POST http://localhost:8080/tasks
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJObzIxMiIsImlhdCI6MTY4ODkwMjcwNywiZXhwIjoxNjg4OTg5MTA3fQ.hs9lq6w0eYejSlhqYWwrOGmqdUBhdnKH8FsPP1Pbm38
 Content-Type: application/json
 
 {
-  "title": "Task1",
-  "description": "Information about Task1",
-  "dateAndTimeOfTask": "2023-07-08 21:06:10",
+  "title": "Task4",
+  "description": "Information about Task4",
+  "dateAndTimeOfTask": "2023-07-09 14:41:10",
   "status": {
     "id": 1
   },
   "category": {
-    "id": 2
+    "id": 4
   },
   "regularity": {
     "id": 1
@@ -25,17 +27,18 @@ Content-Type: application/json
 
 ###
 POST http://localhost:8080/tasks
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJObzIxMiIsImlhdCI6MTY4ODkwMjcwNywiZXhwIjoxNjg4OTg5MTA3fQ.hs9lq6w0eYejSlhqYWwrOGmqdUBhdnKH8FsPP1Pbm38
 Content-Type: application/json
 
 {
   "title": "Task2",
   "description": "Information about Task2",
-  "dateAndTimeOfTask": "2023-07-08 21:19:10",
+  "dateAndTimeOfTask": "2023-07-09 14:01:10",
   "status": {
-    "id": 1
+    "id": 2
   },
   "category": {
-    "id": 2
+    "id": 1
   },
   "regularity": {
     "id": 1
@@ -47,12 +50,13 @@ Content-Type: application/json
 
 ###
 POST http://localhost:8080/tasks
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJObzIxMSIsImlhdCI6MTY4ODkwMjAyNCwiZXhwIjoxNjg4OTg4NDI0fQ.wjwM3nZC_NF4QV-bgDw6jMbyrGsINmniclKlX97NRy4
 Content-Type: application/json
 
 {
-  "title": "Task5",
-  "description": "Information about Task5",
-  "dateAndTimeOfTask": "2023-07-08 21:59:10",
+  "title": "Task3",
+  "description": "Information about Task3",
+  "dateAndTimeOfTask": "2023-07-09 16:59:10",
   "status": {
     "id": 1
   },
@@ -69,21 +73,22 @@ Content-Type: application/json
 
 ###
 PUT http://localhost:8080/tasks
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJObzIxMiIsImlhdCI6MTY4ODkwMjcwNywiZXhwIjoxNjg4OTg5MTA3fQ.hs9lq6w0eYejSlhqYWwrOGmqdUBhdnKH8FsPP1Pbm38
 Content-Type: application/json
 
 {
   "id": 1,
-  "title": "Task4",
-  "description": "Information about Task4",
-  "dateAndTimeOfTask": "2023-07-08 21:40:10",
+  "title": "Task2New",
+  "description": "Information about Task2New",
+  "dateAndTimeOfTask": "2023-07-09 14:01:10",
   "status": {
     "id": 1
   },
   "category": {
-    "id": 2
+    "id": 1
   },
   "regularity": {
-    "id": 1
+    "id": 2
   },
   "priority": {
     "id": 1
@@ -91,22 +96,25 @@ Content-Type: application/json
 }
 
 ###
-GET localhost:8080/tasks/categories?categoryId=2
+GET localhost:8080/tasks/categories?categoryId=4
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJObzIxMiIsImlhdCI6MTY4ODkwMjcwNywiZXhwIjoxNjg4OTg5MTA3fQ.hs9lq6w0eYejSlhqYWwrOGmqdUBhdnKH8FsPP1Pbm38
 
 ###
-GET localhost:8080/tasks/notifications?userId=1
-
-###
-GET localhost:8080/tasks/notifications?userId=2
+GET localhost:8080/tasks/notifications
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJObzIxMiIsImlhdCI6MTY4ODkwMjcwNywiZXhwIjoxNjg4OTg5MTA3fQ.hs9lq6w0eYejSlhqYWwrOGmqdUBhdnKH8FsPP1Pbm38
 
 ###
 GET http://localhost:8080/tasks/statuses
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJObzIxMiIsImlhdCI6MTY4ODkwMjcwNywiZXhwIjoxNjg4OTg5MTA3fQ.hs9lq6w0eYejSlhqYWwrOGmqdUBhdnKH8FsPP1Pbm38
 
 ###
 GET http://localhost:8080/tasks/regularities
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJObzIxMSIsImlhdCI6MTY4ODg5NTcyMCwiZXhwIjoxNjg4OTgyMTIwfQ._KSZkxoWAeFphl8dZXTX9Dql6cu-3AwY9gRyfu12IGc
 
 ###
 GET http://localhost:8080/tasks/priorities
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJObzIxMSIsImlhdCI6MTY4ODg5NTcyMCwiZXhwIjoxNjg4OTgyMTIwfQ._KSZkxoWAeFphl8dZXTX9Dql6cu-3AwY9gRyfu12IGc
 
 ###
-DELETE localhost:8080/tasks/4
+DELETE localhost:8080/tasks/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJObzIxMiIsImlhdCI6MTY4ODkwMjcwNywiZXhwIjoxNjg4OTg5MTA3fQ.hs9lq6w0eYejSlhqYWwrOGmqdUBhdnKH8FsPP1Pbm38

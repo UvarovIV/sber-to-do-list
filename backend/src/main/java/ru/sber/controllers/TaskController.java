@@ -45,6 +45,9 @@ public class TaskController {
     @PostMapping
     public ResponseEntity<?> addTask(@Valid @RequestBody Task task) {
         long taskId = taskService.createTask(task);
+        if (taskId == -1) {
+            return ResponseEntity.badRequest().body("Введена некорректная информация");
+        }
         log.info("Добавление задачи {}", task);
         return ResponseEntity.created(URI.create("/tasks/" + taskId)).build();
     }
@@ -52,13 +55,12 @@ public class TaskController {
     /**
      * Метод для получения списка задач по идентификатору пользователя.
      *
-     * @param userId Уникальный идентификатор пользователя
      * @return Возвращает список задач
      */
     @GetMapping
-    public List<AbridgedTask> getTasks(@RequestParam long userId) {
+    public List<AbridgedTask> getTasks() {
         log.info("Вывод всех задач");
-        return taskService.findAll(userId);
+        return taskService.findAll();
     }
 
     /**
@@ -73,16 +75,22 @@ public class TaskController {
         return taskService.findAllByCategoryId(categoryId);
     }
 
+    @GetMapping("/archive")
+    public List<AbridgedTask> getTasksInArchive() {
+        log.info("Вывод всех задач по категории");
+        return taskService.findTasksInArchive();
+    }
+
+
     /**
      * Метод для получения списка задач для уведомлений по идентификатору пользователя.
      *
-     * @param userId Уникальный идентификатор пользователя
      * @return Возвращает список задач
      */
     @GetMapping("/notifications")
-    public List<AbridgedTask> getAllTasksForNotification(@RequestParam long userId) {
+    public List<AbridgedTask> getAllTasksForNotification() {
         log.info("Вывод всех задач, по которым нужно выслать уведомление");
-        return taskService.isNotify(userId);
+        return taskService.isNotify();
     }
 
     /**
@@ -126,7 +134,8 @@ public class TaskController {
      */
     @PutMapping
     public ResponseEntity<?> updateTask(@Valid @RequestBody Task task) {
-        boolean isUpdated = taskService.updateTask(task); //Нужна какая-то проверка на false
+
+        boolean isUpdated = taskService.updateTask(task);
 
         if (isUpdated) {
             log.info("Обновление информации о задаче");

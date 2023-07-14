@@ -1,42 +1,43 @@
 ###
 POST localhost:8080/categories
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJObzIxMiIsImlhdCI6MTY4ODkwMjcwNywiZXhwIjoxNjg4OTg5MTA3fQ.hs9lq6w0eYejSlhqYWwrOGmqdUBhdnKH8FsPP1Pbm38
 Content-Type: application/json
 
 {
-  "name": "Работа",
-  "user": {"id": 1}
+  "name": "Дом2"
 }
 
 ###
 POST localhost:8080/categories
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJObzIxOSIsImlhdCI6MTY4ODkzMTA5NSwiZXhwIjoxNjg5MDE3NDk1fQ.Xbv8Qu74aD9iSNnBFDfzBKnOnq7pzR3ViXF2kF0fQ7c
 Content-Type: application/json
 
 {
-  "name": "Дом",
-  "user": {"id": 1}
+  "name": "Рабо"
 }
 
 ###
 POST localhost:8080/categories
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJObzIxMSIsImlhdCI6MTY4ODkwMjAyNCwiZXhwIjoxNjg4OTg4NDI0fQ.wjwM3nZC_NF4QV-bgDw6jMbyrGsINmniclKlX97NRy4
 Content-Type: application/json
 
 {
-  "name": "Что это?",
-  "user": {"id": 2}
+  "name": "Что это?"
 }
 
 ###
-GET localhost:8080/categories/1
-
+GET localhost:8080/categories
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJObzIxOSIsImlhdCI6MTY4ODkzMTA5NSwiZXhwIjoxNjg5MDE3NDk1fQ.Xbv8Qu74aD9iSNnBFDfzBKnOnq7pzR3ViXF2kF0fQ7c
 ###
 PUT localhost:8080/categories
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJObzIxMiIsImlhdCI6MTY4ODkwMjcwNywiZXhwIjoxNjg4OTg5MTA3fQ.hs9lq6w0eYejSlhqYWwrOGmqdUBhdnKH8FsPP1Pbm38
 Content-Type: application/json
 
 {
-  "id": 2,
-  "name": "Работа не волк",
-  "user": {"id": 1}
+  "id": 3,
+  "name": "Работа2"
 }
 
 ###
-DELETE localhost:8080/categories?idCategory=4
+DELETE localhost:8080/categories?idCategory=3
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJObzIxMiIsImlhdCI6MTY4ODkwMjcwNywiZXhwIjoxNjg4OTg5MTA3fQ.hs9lq6w0eYejSlhqYWwrOGmqdUBhdnKH8FsPP1Pbm38

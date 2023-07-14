@@ -20,18 +20,16 @@ public interface TaskService {
     /**
      * Ищет список задач пользователя
      *
-     * @param userId Уникальный идентификатор пользователя
      * @return Возвращает список задач пользователя
      */
-    List<AbridgedTask> findAll(long userId);
+    List<AbridgedTask> findAll();
 
     /**
      * Ищет задачи, для которых требуется уведомление.
      *
-     * @param userId Уникальный идентификатор пользователя
      * @return Возвращает список задач пользователя, которым требуется уведомление
      */
-    List<AbridgedTask> isNotify(long userId);
+    List<AbridgedTask> isNotify();
 
     /**
      * Ищет все задачи по категории
@@ -56,4 +54,6 @@ public interface TaskService {
      * @return Возвращает статус удаления
      */
     boolean deleteTaskById(long taskId);
+
+    List<AbridgedTask> findTasksInArchive();
 }
